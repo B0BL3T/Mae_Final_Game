@@ -30,7 +30,8 @@ def draw_background(surf):
     text = custom_font.render("Chomp", True, (255, 69, 0))
     surf.blit(text, (SCREEN_WIDTH / 2 - text.get_width() / 2, 0))'''
 
-def add_fish(num_fish):
+
+'''def add_fish(num_fish):
     for _ in range(num_fish):
         fishes.add(Fish(random.randint(SCREEN_WIDTH, SCREEN_WIDTH * 2),
                         random.randint(TILE_SIZE, SCREEN_HEIGHT - TILE_SIZE)))
@@ -38,7 +39,7 @@ def add_fish(num_fish):
 def add_enemies(num_enemies):
     for _ in range(num_enemies):
         enemies.add(Enemy(random.randint(SCREEN_WIDTH, SCREEN_WIDTH * 2),
-                          random.randint(TILE_SIZE, SCREEN_HEIGHT - TILE_SIZE)))
+                          random.randint(TILE_SIZE, SCREEN_HEIGHT - TILE_SIZE)))'''
 
 def add_bullets(num_bullets, pos, angle):
     for _ in range(num_bullets):

@@ -7,9 +7,7 @@ SCREEN_HEIGHT = 600
 
 # speeds are in pixels per frame and frame rate is 1/60 seconds
 
-PLAYER_SPEED = 3
-FISH_SPEED_MIN = 0.5
-FISH_SPEED_MAX = 3
+PLAYER_SPEED = 1
 
 INVADERS_ROWS_PER_RANK = 2
 INVADERS_ROWS = 6
@@ -24,8 +22,6 @@ NUM_LIVES = 3
 BULLET_SPEED = 10
 BULLET_WIDTH = 15
 BULLET_HEIGHT = 3
-BULLET_COLOR = (215,53,2)
+BULLET_COLOR = (0, 0, 255)
 
-TO_WIN = 10
-
-space_black = (0, 0, 0)
+SPACE_BLACK = (0, 0, 0)
