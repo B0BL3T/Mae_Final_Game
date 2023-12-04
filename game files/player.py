@@ -10,6 +10,10 @@ class Player(pygame.sprite.Sprite):
         self_image = pygame.image.load("../assets/sprites/player.png").convert()
         self_image.set_colorkey((0, 0, 0))
 
+        imgsize = self.image.get_size()
+        newsize = (imgsize[0] * .5, imgsize[1] * .5)
+        self.image = pygame.transform.scale(self.image, newsize)
+
         self.image = self_image
         self.rect = self.image.get_rect()
         # rect only stores integers, so we keep track of the position separately

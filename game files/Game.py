@@ -25,6 +25,6 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-
+        player.draw(screen)
 
         pygame.display.flip()
