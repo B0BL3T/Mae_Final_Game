@@ -14,13 +14,17 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
 running = True
 
-player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - player.rect.width)
+# Draw scene/background
+screen.fill(SPACE_BLACK)
+
+# Spawn in player
+player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
-        screen.fill(SPACE_BLACK)
+
 
         pygame.display.flip()
