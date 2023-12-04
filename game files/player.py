@@ -21,11 +21,9 @@ class Player(pygame.sprite.Sprite):
 
     def move_left(self):
         self.x_velocity = -1 * PLAYER_SPEED
-        self.image = self.reverse_image
 
     def move_right(self):
         self.x_velocity = PLAYER_SPEED
-        self.image = self.forward_image
 
     def stop(self):
         self.x_velocity = 0

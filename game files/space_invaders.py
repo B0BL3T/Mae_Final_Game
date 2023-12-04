@@ -22,7 +22,7 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Space Invaders")
 
 # Load the sound effects
-kill_sound = pygame.mixer.Sound("../Assets/Sounds/enemy_explosion.mp3")  # invader killed
+'''kill_sound = pygame.mixer.Sound("../Assets/Sounds/enemy_explosion.mp3")  # invader killed
 die_sound = pygame.mixer.Sound("../assets/sounds/player_die.mp3")    # player died
 # bubbles = pygame.mixer.Sound("../assets/sounds/bubbles.wav") #what does this do??
 bang = pygame.mixer.Sound('../assets/sounds/boom.wav')
@@ -51,7 +51,7 @@ score_font = pygame.font.Font("../assets/fonts/Black_Crayon.ttf", 48)
 game_level = 1
 
 background = screen.copy()
-draw_background(background)
+draw_background(background)'''
 
 # Main Loop
 running = True
