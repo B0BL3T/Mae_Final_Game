@@ -61,7 +61,7 @@ draw_background(background)
 player = Player(SCREEN_WIDTH / 2)
 
 # line up invaders in rows/cols
-init_squad(INVADERS_ROWS, INVADERS_COLS)
+init_squad(INVADERS_ROWS, INVADERS_COLS, 1)
 
 screen.blit(background, (0, 0))
 draw_welcome(screen)

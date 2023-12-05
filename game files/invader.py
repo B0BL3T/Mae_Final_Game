@@ -55,14 +55,14 @@ invader_direction = 1
 
 # setup a sqad of invaders at the initial position, direction, and speed for the level
 def init_squad(num_rows, num_cols, game_level):
-    invader_speed = INVADER_SPEED + LEVEL_ACCEL * (game_level - 1)
+    invader_speed = INVADERS_SPEED + LEVEL_ACCEL * (game_level - 1)
     invader_direction = 1
 
     # Line up invader_rows with increasing rank every INVADERS_ROWS_PER_RANK
     for row in range(num_rows):
-        y = (num_rows - row) * SQUAD_PITCH + TOP_ROW_Y  # row numbers from bottom to top
+        y = (num_rows - row) * INVADERS_PITCH + TOP_ROW_Y  # row numbers from bottom to top
         rank = row / INVADERS_ROWS_PER_RANK
-        for x in range(SQUAD_PITCH, SCREEN_HEIGHT, SQUAD_PITCH):
+        for x in range(INVADERS_PITCH, SCREEN_HEIGHT, INVADERS_PITCH):
             invaders.add(Invader(x, y, rank))
 
 
