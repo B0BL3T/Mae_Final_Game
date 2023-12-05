@@ -1,5 +1,6 @@
 import pygame
 import random
+from bomb import *
 from parameters import *
 
 
@@ -22,23 +23,26 @@ class Invader(pygame.sprite.Sprite):
         self.rect.center = (x, y)
 
     # march each invader in direction: 1=right, -1=left, 0=down
-    # if any down march reaches player level, tell caller game over
+    # if any downward march reaches player's row, tell caller level is lost
     def update(self, direction):
         if direction != 0:
             self.x += invader_speed * invader_direction
             self.rect.x = self.x
-            return 0
+            # see if it will drop a bomb
+            if random() < PROBABILITY_BOMB:
+                drop_bomb(self.rect.midbottom, bomb_sound)
+            return False
         else:
-            self.y += INVADER_DROP
+            self.y += INVADERS_DROP
             self.rect.y = self.y
             if self.y >= player.y:
-                return 1
+                return True
             else:
-                return 0
+                return False
 
     # check if an invader is out of horizontal roaming bound
     def reached_bound(self):
-        if self.x < MARCH_XBOUNDARY or self.x > SCREEN_WIDTH - self.rect.width - MARCH_XBOUNDARY:
+        if self.x < INVADERS_PITCH or self.x > SCREEN_WIDTH - self.rect.width - INVADERS_PITCH:
             return False
         else:
             return True
@@ -52,35 +56,39 @@ invaders = pygame.sprite.Group()
 invader_speed = INVADERS_SPEED
 invader_direction = 1
 
+bomb_sound = 0
+
 
 # setup a sqad of invaders at the initial position, direction, and speed for the level
-def init_squad(num_rows, num_cols, game_level):
+def squad_init(num_rows, num_cols, game_level, invader_bomb):
     invader_speed = INVADERS_SPEED + LEVEL_ACCEL * (game_level - 1)
     invader_direction = 1
+    bomb_sound = invader_bomb
 
     # Line up invader_rows with increasing rank every INVADERS_ROWS_PER_RANK
     for row in range(num_rows):
         y = (num_rows - row) * INVADERS_PITCH + TOP_ROW_Y  # row numbers from bottom to top
         rank = row / INVADERS_ROWS_PER_RANK
-        for x in range(INVADERS_PITCH, SCREEN_HEIGHT, INVADERS_PITCH):
-            invaders.add(Invader(x, y, rank))
+        for x in range(num_cols):
+            invaders.add(Invader((x + 1) * INVADERS_PITCH, y, rank))
 
 
-def march_squad():
+def squad_march():
     # first march squad horizontally
     for invader in invaders:
         invader.update(invader_direction)
     for invader in invaders:
-        # check if any hit bounds, drop the squad down a step. if hit player level, return 0
         if invader.reached_bound():
-            game_over = march_down()
+            # if any hit left/right bound, drop entire squad down a step.
+            over_run = squad_down()  # if lowest reaches player level, return lost
             invader_direction *= -1
             break
-    return game_over
+    return over_run
 
 
-def march_down():
-    gameover = 0
+def squad_down():
+    over = False
+    # march everone in squad down a step
     for invader in invaders:
-        gameover += invader.update(0)
-    return gameover
+        over = invader.update(0) or over  # look for ANY invader hit bottom row
+    return over

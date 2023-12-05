@@ -1,5 +1,4 @@
 import pygame
-from math import *
 from parameters import *
 
 # Invader attack by dropping bombs
@@ -25,6 +24,6 @@ class Bomb(pygame.sprite.Sprite):
 bombs = pygame.sprite.Group()
 
 def drop_bomb(pos, invader_bomb):
-    if len(bombs) <= MAX_BOMBS:
+    if len(bombs) < MAX_BOMBS:
         bombs.add(Bomb(pos))
         pygame.mixer.Sound.play(invader_bomb)
