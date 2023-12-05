@@ -26,4 +26,4 @@ bombs = pygame.sprite.Group()
 def drop_bomb(pos, invader_bomb):
     if len(bombs) < MAX_BOMBS:
         bombs.add(Bomb(pos))
-        pygame.mixer.Sound.play(invader_bomb)
+        #pygame.mixer.Sound.play(invader_bomb)

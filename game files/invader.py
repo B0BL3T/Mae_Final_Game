@@ -26,10 +26,10 @@ class Invader(pygame.sprite.Sprite):
     # if any downward march reaches player's row, tell caller level is lost
     def update(self, direction):
         if direction != 0:
-            self.x += invader_speed * invader_direction
+            self.x += invader_speed * 1
             self.rect.x = self.x
             # see if it will drop a bomb
-            if random() < PROBABILITY_BOMB:
+            if random.random() < PROBABILITY_BOMB:
                 drop_bomb(self.rect.midbottom, bomb_sound)
             return False
         else:
@@ -63,7 +63,7 @@ bomb_sound = 0
 def squad_init(num_rows, num_cols, game_level, invader_bomb):
     invader_speed = INVADERS_SPEED + LEVEL_ACCEL * (game_level - 1)
     invader_direction = 1
-    bomb_sound = invader_bomb
+    #bomb_sound = invader_bomb
 
     # Line up invader_rows with increasing rank every INVADERS_ROWS_PER_RANK
     for row in range(num_rows):
@@ -76,7 +76,7 @@ def squad_init(num_rows, num_cols, game_level, invader_bomb):
 def squad_march():
     # first march squad horizontally
     for invader in invaders:
-        invader.update(invader_direction)
+        invader.update(1)
     for invader in invaders:
         if invader.reached_bound():
             # if any hit left/right bound, drop entire squad down a step.
