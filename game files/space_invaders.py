@@ -40,7 +40,7 @@ tile_size = 64
 custom_font = pygame.font.Font("../assets/fonts/Black_Crayon.ttf", 50)
 text = (custom_font.render("Space Invaders", True, (255, 69, 0)))
 
-life_icon = pygame.image.load("../assets/sprites/orange_fish_alt.png").convert()
+life_icon = pygame.image.load("../assets/sprites/player.png").convert()
 life_icon.set_colorkey((0, 0, 0))
 
 # initialize score and a custom font to display it
@@ -65,7 +65,7 @@ player = Player(SCREEN_WIDTH / 2)
 while lives > 0 and running:
 
     # line up invaders in rows/cols when starting, or squad is wiped out
-    if len(inavders) == 0:
+    if len(invaders) == 0:
         game_level += 1
         squad_init(INVADERS_ROWS, INVADERS_COLS, game_level, invader_bomb)
 
