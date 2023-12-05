@@ -21,7 +21,7 @@ pygame.display.set_caption("Space Invaders")
 hit_sound = pygame.mixer.Sound("../assets/sounds/enemy_explosion.mp3")  # invader killed
 die_sound = pygame.mixer.Sound("../assets/sounds/player_die.mp3")  # player died
 player_fire = pygame.mixer.Sound("../assets/sounds/default_shot.mp3")  # player fires
-# invader_bomb = pygame.mixer.Sound("../assets/sounds/invader_bomb.wav")  # invader fires
+invader_bomb = pygame.mixer.Sound("../assets/sounds/torp_explosion.mp3")  # invader fires
 
 '''bang = pygame.mixer.Sound('../assets/sounds/bang.wav')
 tune = pygame.mixer.Sound("../assets/sounds/we_have_time.ogg")

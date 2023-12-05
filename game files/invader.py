@@ -11,7 +11,7 @@ class Invader(pygame.sprite.Sprite):
 
         self.rank = rank
         # use icon for rank of the invader
-        self.image = pygame.image.load(f"../assets/sprites/invader{rank}.png").convert()
+        self.image = pygame.image.load(f"../assets/sprites/enemy.png").convert()
         self.image = pygame.transform.flip(self.image, True, False)
 
         self.image.set_colorkey((0, 0, 0))
