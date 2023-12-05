@@ -2,6 +2,7 @@ import pygame
 import random
 from parameters import *
 
+
 class Invader(pygame.sprite.Sprite):
 
     def __init__(self, x, y, rank):
@@ -11,62 +12,75 @@ class Invader(pygame.sprite.Sprite):
         # use icon for rank of the invader
         self.image = pygame.image.load(f"../assets/sprites/invader{rank}.png").convert()
         self.image = pygame.transform.flip(self.image, True, False)
-        
-        self.image.set_colorkey((0,0,0))
+
+        self.image.set_colorkey((0, 0, 0))
         self.rect = self.image.get_rect()
 
         self.x = x
         self.y = y
 
-        self.rect.center = (x,y)
+        self.rect.center = (x, y)
 
     # march each invader in direction: 1=right, -1=left, 0=down
-    # if any horizontal march is out of screen width range, tell the caller to march down a row
     # if any down march reaches player level, tell caller game over
     def update(self, direction):
         if direction != 0:
             self.x += invader_speed * invader_direction
             self.rect.x = self.x
-            if self.x < self.rect.width or self.x > SCREEN_WIDTH - 2*self.rect.width:
-                return 1
-            else:
-                return 0
+            return 0
         else:
-            self.y += INVADER_PITCH
+            self.y += INVADER_DROP
             self.rect.y = self.y
             if self.y >= player.y:
                 return 1
             else:
                 return 0
 
+    # check if an invader is out of horizontal roaming bound
+    def reached_bound(self):
+        if self.x < MARCH_XBOUNDARY or self.x > SCREEN_WIDTH - self.rect.width - MARCH_XBOUNDARY:
+            return False
+        else:
+            return True
+
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
+
 invaders = pygame.sprite.Group()
 
-invader_speed = INVADER_SPEED
+invader_speed = INVADERS_SPEED
 invader_direction = 1
 
+
+# setup a sqad of invaders at the initial position, direction, and speed for the level
 def init_squad(num_rows, num_cols, game_level):
-    invader_speed = INVADER_SPEED + LEVEL_ACCEL * (game_level-1)
+    invader_speed = INVADER_SPEED + LEVEL_ACCEL * (game_level - 1)
     invader_direction = 1
 
     # Line up invader_rows with increasing rank every INVADERS_ROWS_PER_RANK
     for row in range(num_rows):
-        y = (num_rows - row) * SQUAD_PITCH + TOP_ROW_Y	# row numbers from bottom to top
+        y = (num_rows - row) * SQUAD_PITCH + TOP_ROW_Y  # row numbers from bottom to top
         rank = row / INVADERS_ROWS_PER_RANK
         for x in range(SQUAD_PITCH, SCREEN_HEIGHT, SQUAD_PITCH):
             invaders.add(Invader(x, y, rank))
 
-# march squad horizontally. if hit x-bounds, drop a row. if hit last row, return >0
-def march_squad(a):
-    outside = 0		# used to record if any hit x-bounds
+
+def march_squad():
+    # first march squad horizontally
     for invader in invaders:
-        outside += invader.update(invader_direction)
-    if outside > 0:	# now drop a row
-        outside = 0	# used to record if any hit bottom row
-        for invader in invaders:
-            outside += invader.update(0)
-        return outside
-    else:
-        return 0
+        invader.update(invader_direction)
+    for invader in invaders:
+        # check if any hit bounds, drop the squad down a step. if hit player level, return 0
+        if invader.reached_bound():
+            game_over = march_down()
+            invader_direction *= -1
+            break
+    return game_over
+
+
+def march_down():
+    gameover = 0
+    for invader in invaders:
+        gameover += invader.update(0)
+    return gameover

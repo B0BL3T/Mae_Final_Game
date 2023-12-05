@@ -6,7 +6,7 @@ from bullet import Bullet, bullets
 
 def draw_background(surf):
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    screen.fill(space_black)
+    screen.fill(SPACE_BLACK)
     '''# Load tiles from the assets folder into surfaces
     screen.fill(black)
     water = pygame.image.load("../assets/sprites/water.png").convert()

@@ -5,29 +5,28 @@ import time
 from math import atan2, pi
 from player import Player
 from parameters import *
-from utilities import draw_background, add_fish, add_enemies, add_bullets
-from bullet import bullets
-
-# import the class Fish and fishes container from the module fish
-from invader import Invader, invaders
+from utilities import *
+from bullet import *
+from bomb import *
+from invader import *
 
 # Initialize Pygame
 pygame.init()
 
 # play background music
-pygame.mixer.Sound.play(tune, -1)
+#pygame.mixer.Sound.play(tune, -1)
 
 # Create the screen
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Space Invaders")
 
 # Load the sound effects
-'''kill_sound = pygame.mixer.Sound("../Assets/Sounds/enemy_explosion.mp3")  # invader killed
-die_sound = pygame.mixer.Sound("../assets/sounds/player_die.mp3")    # player died
-# bubbles = pygame.mixer.Sound("../assets/sounds/bubbles.wav") #what does this do??
-bang = pygame.mixer.Sound('../assets/sounds/boom.wav')
+'''hit_sound = pygame.mixer.Sound("../assets/sounds/hit.wav")	# invader killed
+die_sound = pygame.mixer.Sound("../assets/sounds/die.wav")	# player died
+player_fire = pygame.mixer.Sound("../assets/sounds/player_fire.wav")	# player fires
+invader_bomb = pygame.mixer.Sound("../assets/sounds/invader_bomb.wav")	# invader fires
+bang = pygame.mixer.Sound('../assets/sounds/bang.wav')
 tune = pygame.mixer.Sound("../assets/sounds/we_have_time.ogg")
-torpedo_shot = pygame.mixer.Sound("../Assets/Sounds/torpedo_shot.wav")
 
 # initialize pygame clock
 clock = pygame.time.Clock()
@@ -59,7 +58,7 @@ background = screen.copy()
 draw_background(background)
 
 # spawn in player
-player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT - player.rect.width)
+player = Player(SCREEN_WIDTH / 2)
 
 # line up invaders in rows/cols
 init_squad(INVADERS_ROWS, INVADERS_COLS)
@@ -77,33 +76,17 @@ while lives > 0 and running:
         # control player with arrow keys
         player.stop()  # always start from no motion state
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP and player.rect.y > 0:  # move player up if event key is up AND POSSIBLE
-                player.move_up()
-            if event.key == pygame.K_DOWN and player.rect.y < SCREEN_HEIGHT - player.rect.height:  # move player down if event key is down AND POSSIBLE
-                player.move_down()
-            if event.key == pygame.K_LEFT and player.rect.x > 0:  # move player left if event key is left AND POSSIBLE
+            if event.key == pygame.K_LEFT:  # move player left IF POSSIBLE
                 player.move_left()
-            if event.key == pygame.K_RIGHT and player.rect.x < SCREEN_WIDTH - player.rect.width:  # move player right if event key is right AND POSSIBLE
+            if event.key == pygame.K_RIGHT:  # move player right IF POSSIBLE
                 player.move_right()
             if event.key == pygame.K_SPACE:
-                pygame.mixer.Sound.play(bang)
-                pos = player.rect.midright
-                add_bullets(1, pos, angle)
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                if pygame.mouse.get_pressed() [0]:
-                    player.x, player.y = pygame.mouse.get_pos()
+                fire_bullets(player.rect.midtop, player_fire)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             if pygame.mouse.get_pressed()[0]:
-                pos = player.rect.midright
-                mouse_x, mouse_y = pygame.mouse.get_pos()
-                angle = - atan2(mouse_y - pos[1], mouse_x - pos[0])
-                add_bullets(1, pos, angle)
-
+                player.x = pygame.mouse.get_pos()[0]
 
     for bullet in bullets:
-
-        if bullet.rect.x > SCREEN_WIDTH:
-            bullets.remove(bullet)
 
         for enemy in enemies:
             bullet_enemy = pygame.sprite.spritecollide(bullet, enemies, True)

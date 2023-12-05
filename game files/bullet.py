@@ -3,20 +3,17 @@ from math import *
 from parameters import *
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self ,x, y, angle):
+    def __init__(self, pos):
         super().__init__()
         # Create a bullet rect at (0, 0) and then set correct position.
         self.rect = pygame.Rect(0, 0, BULLET_WIDTH, BULLET_HEIGHT)
-        self.x = x
-        self.y = y
-        self.angle = angle
+        self.x, self.y = pos
 
     def update(self, player):
         # Move the bullet up the screen
-        self.x += BULLET_SPEED * cos(self.angle)
-        self.y -= BULLET_SPEED * sin(self.angle) # note the negative
-
-
+        self.y -= BULLET_SPEED		# note negative
+        if self.y <= 0:
+            bullets.remove(self)
         # Update the rect position
         self.rect.x, self.rect.y = self.x, self.y
 
@@ -25,3 +22,8 @@ class Bullet(pygame.sprite.Sprite):
         pygame.draw.rect(screen, BULLET_COLOR, self.rect)
 
 bullets = pygame.sprite.Group()
+
+def fire_bullet(pos, player_fire):
+    if len(bullets) <= MAX_BULLETS:
+        bullets.add(Bullet(pos))
+        pygame.mixer.Sound.play(player_fire)
