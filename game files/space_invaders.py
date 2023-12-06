@@ -5,10 +5,10 @@ import time
 from math import atan2, pi
 from player import Player
 from parameters import *
-# from utilities import *
 from bullet import *
 from bomb import *
 from invader import *
+from squad import *
 
 # Initialize Pygame
 pygame.init()
@@ -38,7 +38,7 @@ tile_size = 64
 
 # load game font
 custom_font = pygame.font.Font("../assets/fonts/Black_Crayon.ttf", 50)
-text = (custom_font.render("Space Invaders", True, (255, 69, 0)))
+text = (custom_font.render("Space Invaders", True, (255,69,0)))
 
 life_icon = pygame.image.load("../assets/sprites/player.png").convert()
 life_icon.set_colorkey((0, 0, 0))
@@ -52,22 +52,22 @@ game_level = 0
 # Main Loop
 running = True
 background = screen.copy()
-# draw_background(background)
+#draw_background(background)
 
 # spawn in player
 player = Player(SCREEN_WIDTH / 2)
 
-# screen.blit(background, (0, 0))
-# draw_welcome(screen)
-# pygame.display.flip()
-# time.sleep(5)
+#screen.blit(background, (0, 0))
+#draw_welcome(screen)
+#pygame.display.flip()
+#time.sleep(5)
 
 while lives > 0 and running:
 
     # line up invaders in rows/cols when starting, or squad is wiped out
     if len(invaders) == 0:
         game_level += 1
-        squad_init(INVADERS_ROWS, INVADERS_COLS, game_level, invader_bomb)
+        squad = Squad(INVADERS_ROWS, INVADERS_COLS, game_level, invader_bomb)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -82,50 +82,51 @@ while lives > 0 and running:
                 player.move_right()
             if event.key == pygame.K_SPACE:
                 fire_bullets(player.rect.midtop, player_fire)
-        elif event.type == pygame.MOUSEBUTTONDOWN:  # keeping this for the mouse feature - moves player
+        elif event.type == pygame.MOUSEBUTTONDOWN:	# keeping this for the mouse feature - moves player
             if pygame.mouse.get_pressed()[0]:
                 player.x = pygame.mouse.get_pos()[0]
 
-    screen.blit(background, (0, 0))
+    screen.blit(background, (0,0))
 
     # update game objects
-    lost = squad_march()
-    if lost:  # if invaders reach player's row
+    lost = squad.march()
+    if lost :	# if invaders reach player's row
         pygame.mixer.Sound.play(die_sound)
-        lives -= 1
-        invaders.empty()  # clear the invaders to reinitialize level
-        game_level -= 1  # and don't advance level
+        lives -=1
+        invaders.empty()	# clear the invaders to reinitialize level
+        game_level -= 1		# and don't advance level
     player.update()
     bullets.update()
     bombs.update()
 
-    POINT_PER_RANK = 10
-
     for bullet in bullets:
         results = pygame.sprite.spritecollide(bullet, invaders, True)
-        if results:  # shot an invader?
+        if results:	# shot an invader?
             pygame.mixer.Sound.play(hit_sound)
-            score += results[0].rank * POINT_PER_RANK  # increment score per rank hit
+            score += results[0].rank * POINTS_PER_RANK	# increment score per rank hit
             invaders.remove(results[0])
             bullets.remove(bullet)
 
     results = pygame.sprite.spritecollide(player, bombs, True)
-    if results:  # hit by invader bomb?
+    if results:		# hit by invader bomb?
         pygame.mixer.Sound.play(die_sound)
         bombs.remove(results[0])
         lives -= 1
-        invaders.empty()  # clear the invaders to reinitialize level
-        game_level -= 1  # and don't advance level
+        invaders.empty()	# clear the invaders to reinitialize level
+        game_level -= 1		# and don't advance level
 
     # draw game objects
     player.draw(screen)
     invaders.draw(screen)
-    bullets.draw_bullet(screen)
-    bombs.draw_bomb(screen)
+    for bullet in bullets:
+        bullet.draw_bullet(screen)
+    for bomb in bombs:
+        bullet.draw_bomb(screen)
 
-    # draw the score in the upper left corner
+
+    #draw the score in the upper left corner
     text = score_font.render(f"{score}", True, (255, 69, 0))
-    screen.blit(text, (SCREEN_WIDTH - text.get_width() - 10, 0))
+    screen.blit(text, (SCREEN_WIDTH - text.get_width() -10, 0 ))
 
     # draw lives in the lower left corner
     for i in range(lives):
@@ -137,7 +138,7 @@ while lives > 0 and running:
     # limit frame rate
     clock.tick(60)
 
-# if won != "":
+#if won != "":
 #    res_text = custom_font.render(won, True, (255, 69, 0))
 #    screen.blit(res_text, ((SCREEN_WIDTH - text.get_width()) / 2, SCREEN_HEIGHT / 2))
 #    pygame.display.flip()
