@@ -16,6 +16,58 @@ pygame.init()
 
 # Create the screen
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+def draw_background(screen):
+    screen.fill(SPACE_BLACK)
+
+background = screen.copy()
+
+
+#buttons
+play_button = pygame.image.load("../assets/sprites/player.png").convert()
+quit_button = pygame.image.load("../assets/sprites/player_powered_up.png").convert()
+
+new_size_play_button = pygame.transform.scale(play_button, (209.25,94.5))
+new_size_quit_button = pygame.transform.scale(quit_button, (209.25,94.5))
+
+play_button_rect = new_size_play_button.get_rect(center=(SCREEN_WIDTH/2 , SCREEN_HEIGHT/2 -60))
+quit_button_rect = new_size_quit_button.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 +60))
+
+
+def main_menu():
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    mouse_pos = pygame.mouse.get_pos()
+                    if play_button_rect.collidepoint(mouse_pos):
+                        return
+                    elif quit_button_rect.collidepoint(mouse_pos):
+                        pygame.quit()
+                        sys.exit()
+
+        # for x in range(0, screen_width, bg.get_width()):
+        #     for y in range(0, screen_height, bg.get_height()):
+        #         screen.blit(bg, (x, y))
+
+        screen.blit(new_size_play_button, play_button_rect)
+        screen.blit(new_size_quit_button, quit_button_rect)
+
+        custom_font = pygame.font.Font("../assets/fonts/Black_Crayon.ttf", 180)
+        text = custom_font.render("Shoota", True, (255, 255, 240))
+        screen.blit(text, (SCREEN_WIDTH / 2 - text.get_width() / 2, 0))
+
+        pygame.display.flip()
+
+main_menu()
+
+screen.blit(background,(0,0))
+
+
 pygame.display.set_caption("Space Invaders")
 
 # Load the sound effects
@@ -56,7 +108,6 @@ game_level = 0
 
 # Main Loop
 running = True
-background = screen.copy()
 #draw_background(background)
 
 # spawn in player
