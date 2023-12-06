@@ -9,6 +9,7 @@ from bullet import *
 from bomb import *
 from invader import *
 from squad import *
+import os
 
 # Initialize Pygame
 pygame.init()

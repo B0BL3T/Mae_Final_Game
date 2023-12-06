@@ -7,7 +7,7 @@ SCREEN_HEIGHT = 600
 
 # speeds are in pixels per frame and frame rate is 1/60 seconds
 
-PLAYER_SPEED = 2
+PLAYER_SPEED = 3
 
 POINTS_PER_RANK = 10	# higher rank invaders are worth more
 INVADERS_ROWS_PER_RANK = 2
@@ -21,13 +21,13 @@ TOP_ROW_Y = 40		# y position of top row
 
 NUM_LIVES = 3
 
-BULLET_SPEED = 5
+BULLET_SPEED = 8
 BULLET_WIDTH =  5
 BULLET_HEIGHT = 15
 BULLET_COLOR = (0, 255, 0)
 MAX_BULLETS = 2
 
-PROBABILITY_BOMB = .01	# probability of each invader dropping a bomb (limited by MAX_BOMBS)
+PROBABILITY_BOMB = .001	# probability of each invader dropping a bomb (limited by MAX_BOMBS)
 BOMB_SPEED = 3
 BOMB_WIDTH =  10
 BOMB_HEIGHT = 10
