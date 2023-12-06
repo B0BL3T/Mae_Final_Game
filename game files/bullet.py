@@ -16,7 +16,7 @@ class Bullet(pygame.sprite.Sprite):
         # Update the rect position
         self.rect.x, self.rect.y = self.x, self.y
 
-    def draw(self, screen):
+    def draw_bullet(self, screen):
         # Draw the bullet to the screen
         pygame.draw.rect(screen, BULLET_COLOR, self.rect)
 
@@ -25,4 +25,4 @@ bullets = pygame.sprite.Group()
 def fire_bullet(pos, player_fire):
     if len(bullets) < MAX_BULLETS:
         bullets.add(Bullet(pos))
-#        pygame.mixer.Sound.play(player_fire)
+        pygame.mixer.Sound.play(player_fire)

@@ -41,7 +41,11 @@ custom_font = pygame.font.Font("../assets/fonts/Black_Crayon.ttf", 50)
 text = (custom_font.render("Space Invaders", True, (255,69,0)))
 
 life_icon = pygame.image.load("../assets/sprites/player.png").convert()
-life_icon.set_colorkey((0, 0, 0))
+imgsize = life_icon.get_size()
+newsize = (imgsize[0] * .1, imgsize[1] * .1)
+life_icon = pygame.transform.scale(life_icon, newsize)
+life_icon.set_colorkey((255, 255, 255))
+
 
 # initialize score and a custom font to display it
 score = 0
@@ -81,7 +85,7 @@ while lives > 0 and running:
             if event.key == pygame.K_RIGHT:  # move player right if possible
                 player.move_right()
             if event.key == pygame.K_SPACE:
-                fire_bullets(player.rect.midtop, player_fire)
+                fire_bullet(player.rect.midtop, player_fire)
         elif event.type == pygame.MOUSEBUTTONDOWN:	# keeping this for the mouse feature - moves player
             if pygame.mouse.get_pressed()[0]:
                 player.x = pygame.mouse.get_pos()[0]
@@ -112,8 +116,7 @@ while lives > 0 and running:
         pygame.mixer.Sound.play(die_sound)
         bombs.remove(results[0])
         lives -= 1
-        invaders.empty()	# clear the invaders to reinitialize level
-        game_level -= 1		# and don't advance level
+        time.sleep(.5)
 
     # draw game objects
     player.draw(screen)
@@ -121,7 +124,7 @@ while lives > 0 and running:
     for bullet in bullets:
         bullet.draw_bullet(screen)
     for bomb in bombs:
-        bullet.draw_bomb(screen)
+        bomb.draw_bomb(screen)
 
 
     #draw the score in the upper left corner
@@ -130,7 +133,7 @@ while lives > 0 and running:
 
     # draw lives in the lower left corner
     for i in range(lives):
-        screen.blit(life_icon, (i * TILE_SIZE, SCREEN_HEIGHT - TILE_SIZE))
+        screen.blit(life_icon, (i * TILE_SIZE, 0))
 
     # Update the display
     pygame.display.flip()

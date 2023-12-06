@@ -6,7 +6,7 @@ class Bomb(pygame.sprite.Sprite):
     def __init__(self, pos):
         super().__init__()
         # Create a bullet rect at (0, 0) and then set correct position.
-        self.rect = pygame.Rect(0, 0, BULLET_WIDTH, BULLET_HEIGHT)
+        self.rect = pygame.Rect(0, 0, BOMB_WIDTH, BOMB_HEIGHT)
         self.x, self.y = pos
 
     def update(self):
@@ -17,7 +17,7 @@ class Bomb(pygame.sprite.Sprite):
         # Update the rect position
         self.rect.x, self.rect.y = self.x, self.y
 
-    def draw(self, screen):
+    def draw_bomb(self, screen):
         # Draw the bomb to the screen
         pygame.draw.rect(screen, BOMB_COLOR, self.rect)
 
