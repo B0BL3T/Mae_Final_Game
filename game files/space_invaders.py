@@ -93,11 +93,9 @@ hit_sound = pygame.mixer.Sound("../assets/sounds/enemy_explosion.mp3")  # invade
 die_sound = pygame.mixer.Sound("../assets/sounds/player_die.mp3")  # player died
 player_fire = pygame.mixer.Sound("../assets/sounds/default_shot.mp3")  # player fires
 invader_bomb = pygame.mixer.Sound("../assets/sounds/torp_explosion.mp3")  # invader fires
+music = pygame.mixer.Sound("../assets/music/electronic_senses_absolom.mp3")
 
-'''bang = pygame.mixer.Sound('../assets/sounds/bang.wav')
-tune = pygame.mixer.Sound("../assets/sounds/we_have_time.ogg")
-# play background music
-#pygame.mixer.Sound.play(tune, -1)'''
+pygame.mixer.Sound.play(music, -1)
 
 # initialize pygame clock
 clock = pygame.time.Clock()
@@ -166,9 +164,7 @@ while lives > 0 and running:
     lost = squad.march()
     if lost:  # if invaders reach player's row
         pygame.mixer.Sound.play(die_sound)
-        lives -= 1
-        invaders.empty()  # clear the invaders to reinitialize level
-        game_level -= 1  # and don't advance level
+        running = False
     player.update()
     bullets.update()
     bombs.update()
@@ -214,12 +210,6 @@ while lives > 0 and running:
 
     # limit frame rate
     clock.tick(60)
-
-# if won != "":
-#    res_text = custom_font.render(won, True, (255, 69, 0))
-#    screen.blit(res_text, ((SCREEN_WIDTH - text.get_width()) / 2, SCREEN_HEIGHT / 2))
-#    pygame.display.flip()
-#    time.sleep(5)
 
 if (score > load_high_score()):
     save_high_score(score)
