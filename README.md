@@ -1,21 +1,37 @@
 # Maa_Space_Invaders
  
 List of features in game:
+
   Mouse Master: Incorporate to mouse events in the game play (2)
+  
   Keyboard King: Incorporate key press events in the game play (2)
+  
   Sound Blaster: Use sound effects based on game events (2)
+  
   Level Up: Multiple game levels or increasing difficulty (4)
+  
   Healthy Eater: Collectible powerups provide health or other advantages (4)
+  
   Looking Weak: Indicate player status by changing graphics to show damage or other effects (4)
+  
   Points-R-Us: Track player score (2)
+  
   Over Achiever: Track high score between game plays (4)
+  
   Shooter: Use projectiles in the game play (2)
+  
   Shifting Screens: Multiple screens (game play instructions, game over, etc) (2)
+  
   Tick Tock: Use time as a scoring mechanism or other game dynamic (2)
+  
   Fancy Fonts: Use a font you found online for your game (1)
+  
   The Walls Are Hard: Collisions constrain player movement (platforms, walls, etc) (4)
+  
   Muzak: Play continuous background music during the game (2)
+  
   Main Menu: Use a menu to select among multiple actions (eg start, show high scores, quit) (3)
+  
   Total points: 40
 
 Game Description:
