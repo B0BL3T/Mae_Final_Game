@@ -25,4 +25,4 @@ bullets = pygame.sprite.Group()
 def fire_bullet(pos, player_fire):
     if len(bullets) < MAX_BULLETS:
         bullets.add(Bullet(pos))
-        pygame.mixer.Sound.play(player_fire)
+#        pygame.mixer.Sound.play(player_fire)

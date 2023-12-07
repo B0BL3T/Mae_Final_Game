@@ -12,10 +12,8 @@ class Invader(pygame.sprite.Sprite):
         self.rank = rank
         # use icon for rank of the invader
         self.image = pygame.image.load(f"../assets/sprites/enemy.png").convert()
-        imgsize = self.image.get_size()
-        newsize = (imgsize[0] * .08, imgsize[1] * .08)
-        self.image = pygame.transform.scale(self.image, newsize)
-
+        isize = self.image.get_size()
+        self.image = pygame.transform.scale(self.image, (isize[0] * .08, isize[1] * .08))
         self.image.set_colorkey((255, 255, 255))
         self.rect = self.image.get_rect()
 
@@ -32,7 +30,11 @@ class Invader(pygame.sprite.Sprite):
             self.rect.x = self.x
             # see if it will drop a bomb
             if random.random() < PROBABILITY_BOMB:
-                drop_bomb(self.rect.midbottom, invader_bomb)
+                # see if a power-up
+                if random.random() < PROBABILITY_POWER:
+                    drop_bomb(self.rect.midbottom, "POWER", invader_bomb)
+                else:
+                    drop_bomb(self.rect.midbottom, "", invader_bomb)
             return False
         else:
             if self.x < 0:
@@ -41,7 +43,7 @@ class Invader(pygame.sprite.Sprite):
                 self.x = SCREEN_WIDTH - self.rect.width
             self.y += INVADERS_DROP
             self.rect.y = self.y
-            if self.y >= SCREEN_HEIGHT - 50:  # should be Player's height off bottom
+            if self.y >= SCREEN_HEIGHT - 40:  # should be Player's height off bottom
                 return True
             else:
                 return False

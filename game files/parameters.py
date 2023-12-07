@@ -28,11 +28,15 @@ BULLET_COLOR = (0, 255, 0)
 MAX_BULLETS = 2
 
 PROBABILITY_BOMB = .001	# probability of each invader dropping a bomb (limited by MAX_BOMBS)
+PROBABILITY_POWER = .08	# probability that a bomb is a powerup
 BOMB_SPEED = 3
 BOMB_WIDTH =  10
 BOMB_HEIGHT = 10
-BOMB_COLOR = (255, 0, 0)
+BOMB_COLOR = (255, 100, 0)
+PBOMB_COLOR = (255, 0, 255)	# power-up bomb
 MAX_BOMBS = 4
+
+POWERUP_DURATION = 10	# power up lasts for n seconds
 
 TO_WIN = 10
 SPACE_BLACK = (0, 0, 0)
